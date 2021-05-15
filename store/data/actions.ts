@@ -1,19 +1,33 @@
-import {ActionType} from "./reducer";
+import { Thunk } from "..";
+import { v4 as uuid } from "uuid";
+import { beginActivity, endActivity, setError } from "../ui/activities";
+import { ActionType, GetGPSDataAction } from "./types";
+import { GPSData } from "../../api/types";
 
-import {ThunkAction, ThunkDispatch as Dispatch} from "redux-thunk";
-import {apiFactory} from "../../api/api";
-
-export type Thunk = ThunkAction<Promise<void>, any, any, any>;
-export type ThunkDispatch = Dispatch<any, any, any>;
-
-const getDataAction = (data: any) => ({
-  type: ActionType.GET_DATA,
-  payload: {data},
+const getGPSAction = (information: GPSData): GetGPSDataAction => ({
+  type: ActionType.GET_GPS_DATA,
+  payload: { information },
 });
 
 export const getData = (): Thunk => async (dispatch, getState, context) => {
-  console.log("daaa");
-  const data = await context.api.data.getData();
-  console.log(data);
-  dispatch(getDataAction(data));
+  const activityId = uuid();
+
+  try {
+    await dispatch(
+      beginActivity({ type: ActionType.GET_GPS_DATA, uuid: activityId })
+    );
+
+    const data = await context.api.data.getData();
+    dispatch(getGPSAction(data));
+  } catch (e) {
+    dispatch(
+      setError({
+        type: ActionType.GET_GPS_DATA,
+        message: e.message,
+        uuid: activityId,
+      })
+    );
+  } finally {
+    dispatch(endActivity({ uuid: activityId }));
+  }
 };

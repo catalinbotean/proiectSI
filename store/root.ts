@@ -1,15 +1,31 @@
-import {combineReducers} from "redux";
+import { combineReducers } from "redux";
 
-import {initialState as Pokemons} from "./data/index";
-import data from "./data/reducer";
+import { ApplicationActions } from "./types";
 
-const appReducer = combineReducers({
-  data: combineReducers({
-    data,
+import { State as GPSData, reducer as dataGPS } from "./data";
+import { State as Activities, reducer as activities } from "./ui/activities";
+export interface ApplicationState {
+  GPS: {
+    dataGPS: GPSData;
+  };
+  ui: {
+    activities: Activities;
+  };
+}
+
+const appReducer = combineReducers<ApplicationState>({
+  GPS: combineReducers({
+    dataGPS,
+  }),
+  ui: combineReducers({
+    activities,
   }),
 });
 
-function rootReducer(state: any, action: any) {
+function rootReducer(
+  state: ApplicationState | undefined,
+  action: ApplicationActions
+) {
   return appReducer(state, action);
 }
 

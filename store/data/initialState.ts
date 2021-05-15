@@ -1,4 +1,6 @@
-export const initialState = {
-  data: [],
-  walkHistory: [],
+import { State } from "./types";
+
+export const initialState: State = {
+  infoArray: { info: [] },
+  byName: {},
 };
