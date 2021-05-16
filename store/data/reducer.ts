@@ -6,7 +6,7 @@ export default (state = initialState, action: any) => {
     case ActionType.GET_GPS_DATA: {
       return {
         ...state,
-        data: action.payload.information,
+        infoArray: action.payload.information,
       };
     }
     default:

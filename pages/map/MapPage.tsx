@@ -1,9 +1,9 @@
 import axios from "axios";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import MapView, { AnimatedRegion, Marker } from "react-native-maps";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ApplicationState } from "../../store";
 import { getData, selectGPSData } from "../../store/data";
 import { styles } from "./MapPage.style";
@@ -16,12 +16,14 @@ export function MapPage() {
     longitudeDelta: 0.0421,
   });
 
+  const dispatch = useDispatch();
   const dataInfo = useSelector((state: ApplicationState) =>
     selectGPSData(state.GPS.dataGPS)
   );
 
   React.useEffect(() => {
     dispatch(getData());
+    console.log(dataInfo);
   }, []);
   // const data = firebase.default.firestore().collection("data");
   // console.log("data");
@@ -36,10 +38,14 @@ export function MapPage() {
           coordinate={region}
         />
       </MapView>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        {dataInfo.map((value, index) => (
+          <Text key={index} style={styles.item}>
+            {value}
+          </Text>
+        ))}
+      </ScrollView>
       <StatusBar style="auto" />
     </View>
   );
-}
-function dispatch(arg0: any) {
-  throw new Error("Function not implemented.");
 }

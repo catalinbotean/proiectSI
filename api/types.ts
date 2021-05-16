@@ -1,3 +1,3 @@
-export interface GPSData {
-  info: Array<{ information: String }>;
+export interface FirebaseData {
+  data: Map<string, string>;
 }

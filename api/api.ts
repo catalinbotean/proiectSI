@@ -1,14 +1,15 @@
 import axios from "axios";
-
-import { GPSData } from "./types";
+import { FirebaseData } from "./types";
 
 export const apiFactory = () => ({
   data: {
     getData: async function () {
-      const { data } = await axios.get<GPSData>(
-        "https://wifi-f0745-default-rtdb.firebaseio.com/data.json"
+      const { data } = await axios.get<FirebaseData>(
+        "https://wifi-f0745-default-rtdb.firebaseio.com/gps.json"
       );
-      return data;
+      let gpsData: string[] = [];
+      Object.entries(data.data).map(([key, value]) => gpsData.push(value));
+      return gpsData;
     },
   },
 });

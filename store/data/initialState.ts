@@ -1,6 +1,5 @@
 import { State } from "./types";
 
 export const initialState: State = {
-  infoArray: { info: [] },
-  byName: {},
+  infoArray: [],
 };

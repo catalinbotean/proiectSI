@@ -2,9 +2,8 @@ import { Thunk } from "..";
 import { v4 as uuid } from "uuid";
 import { beginActivity, endActivity, setError } from "../ui/activities";
 import { ActionType, GetGPSDataAction } from "./types";
-import { GPSData } from "../../api/types";
 
-const getGPSAction = (information: GPSData): GetGPSDataAction => ({
+const getGPSAction = (information: string[]): GetGPSDataAction => ({
   type: ActionType.GET_GPS_DATA,
   payload: { information },
 });

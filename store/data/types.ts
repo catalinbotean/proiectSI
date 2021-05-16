@@ -1,11 +1,7 @@
 import { Action } from "redux";
-import { GPSData } from "../../api/types";
 
 export interface State {
-  infoArray: GPSData;
-  byName: {
-    [name: string]: string;
-  };
+  infoArray: string[];
 }
 
 export enum ActionType {
@@ -15,7 +11,7 @@ export enum ActionType {
 export interface GetGPSDataAction extends Action {
   type: ActionType.GET_GPS_DATA;
   payload: {
-    information: GPSData;
+    information: string[];
   };
 }
 
