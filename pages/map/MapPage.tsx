@@ -1,8 +1,11 @@
+import axios from "axios";
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
-import { Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import MapView, { AnimatedRegion, Marker } from "react-native-maps";
-
+import { useDispatch, useSelector } from "react-redux";
+import { ApplicationState } from "../../store";
+import { getData, selectGPSData } from "../../store/data";
 import { styles } from "./MapPage.style";
 
 export function MapPage() {
@@ -13,6 +16,17 @@ export function MapPage() {
     longitudeDelta: 0.0421,
   });
 
+  const dispatch = useDispatch();
+  const dataInfo = useSelector((state: ApplicationState) =>
+    selectGPSData(state.GPS.dataGPS)
+  );
+
+  React.useEffect(() => {
+    dispatch(getData());
+    console.log(dataInfo);
+  }, []);
+  // const data = firebase.default.firestore().collection("data");
+  // console.log("data");
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Aplicatie Nevazatori</Text>
@@ -24,6 +38,13 @@ export function MapPage() {
           coordinate={region}
         />
       </MapView>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        {dataInfo.map((value, index) => (
+          <Text key={index} style={styles.item}>
+            {value}
+          </Text>
+        ))}
+      </ScrollView>
       <StatusBar style="auto" />
     </View>
   );
