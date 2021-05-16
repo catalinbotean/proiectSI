@@ -1,5 +1,14 @@
-import { State } from "./types";
+import {State} from "./types";
 
 export const initialState: State = {
-  infoArray: [],
+  dates: [],
+  byDate: {},
+  byId: {},
+  location: {
+    location: {
+      latitude: 0,
+      longitude: 0,
+    },
+    hour: "",
+  },
 };
