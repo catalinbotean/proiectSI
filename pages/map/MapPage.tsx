@@ -1,14 +1,14 @@
 import {StatusBar} from "expo-status-bar";
 import React, {useEffect, useState} from "react";
 import {ScrollView, Text, TouchableOpacity, View} from "react-native";
-import MapView, {AnimatedRegion, Marker} from "react-native-maps";
+import MapView, {AnimatedRegion, Marker, Polyline} from "react-native-maps";
 import {useDispatch, useSelector} from "react-redux";
 import {ApplicationState} from "../../store";
 import {
   getData,
   refetchData,
-  selectDays,
-  selectGPSData,
+  selectDaysWithWalks,
+  selectLastGPSData,
 } from "../../store/data";
 import {styles} from "./MapPage.style";
 
@@ -22,12 +22,14 @@ export function MapPage() {
 
   const dispatch = useDispatch();
   const dataInfo = useSelector((state: ApplicationState) =>
-    selectGPSData(state.GPS.dataGPS)
+    selectLastGPSData(state.GPS.dataGPS)
   );
 
   const informatii = useSelector((state: ApplicationState) =>
-    selectDays(state.GPS.dataGPS)
+    selectDaysWithWalks(state.GPS.dataGPS)
   );
+
+  console.log(informatii);
 
   React.useEffect(() => {
     dispatch(getData());

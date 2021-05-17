@@ -1,12 +1,12 @@
 import {createSelector} from "reselect";
 import {State} from "./types";
 
-export const selectGPSData = createSelector(
+export const selectLastGPSData = createSelector(
   (state: State) => state.location,
   (infoArray) => infoArray
 );
 
-export const selectDays = createSelector(
+export const selectDaysWithWalks = createSelector(
   (state: State) => state.byDate,
   (date) => date
 );
