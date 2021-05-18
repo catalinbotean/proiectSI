@@ -1,11 +1,28 @@
-import { Action } from "redux";
+import {Action} from "redux";
+
+export interface MapInput {
+  latitude: number;
+  longitude: number;
+}
 
 export interface State {
-  infoArray: string[];
+  dates: string[];
+  byDate: {
+    [id: string]: {
+      walk: MapInput[];
+      startHour: Date;
+      endHour: Date;
+    }[];
+  };
+  byId: {
+    [id: string]: MapInput;
+  };
+  location: {location: MapInput; hour: string};
 }
 
 export enum ActionType {
   GET_GPS_DATA = "GET_GPS_DATA",
+  REFETCH_DATA = "REFETCH_DATA",
 }
 
 export interface GetGPSDataAction extends Action {
@@ -15,4 +32,11 @@ export interface GetGPSDataAction extends Action {
   };
 }
 
-export type Actions = GetGPSDataAction;
+export interface RefetchDataAction extends Action {
+  type: ActionType.REFETCH_DATA;
+  payload: {
+    information: string[];
+  };
+}
+
+export type Actions = GetGPSDataAction | RefetchDataAction;
