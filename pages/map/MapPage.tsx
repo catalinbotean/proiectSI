@@ -1,12 +1,16 @@
-import axios from "axios";
-import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import MapView, { AnimatedRegion, Marker } from "react-native-maps";
-import { useDispatch, useSelector } from "react-redux";
-import { ApplicationState } from "../../store";
-import { getData, selectGPSData } from "../../store/data";
-import { styles } from "./MapPage.style";
+import {StatusBar} from "expo-status-bar";
+import React, {useEffect, useState} from "react";
+import {ScrollView, Text, TouchableOpacity, View} from "react-native";
+import MapView, {AnimatedRegion, Marker, Polyline} from "react-native-maps";
+import {useDispatch, useSelector} from "react-redux";
+import {ApplicationState} from "../../store";
+import {
+  getData,
+  refetchData,
+  selectDaysWithWalks,
+  selectLastGPSData,
+} from "../../store/data";
+import {styles} from "./MapPage.style";
 
 export function MapPage() {
   const [region, setRegion] = useState({
@@ -18,15 +22,26 @@ export function MapPage() {
 
   const dispatch = useDispatch();
   const dataInfo = useSelector((state: ApplicationState) =>
-    selectGPSData(state.GPS.dataGPS)
+    selectLastGPSData(state.GPS.dataGPS)
   );
+
+  const informatii = useSelector((state: ApplicationState) =>
+    selectDaysWithWalks(state.GPS.dataGPS)
+  );
+
+  console.log(informatii);
 
   React.useEffect(() => {
     dispatch(getData());
-    console.log(dataInfo);
   }, []);
-  // const data = firebase.default.firestore().collection("data");
-  // console.log("data");
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      dispatch(refetchData());
+    }, 20000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Aplicatie Nevazatori</Text>
@@ -38,13 +53,14 @@ export function MapPage() {
           coordinate={region}
         />
       </MapView>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        {dataInfo.map((value, index) => (
-          <Text key={index} style={styles.item}>
-            {value}
-          </Text>
-        ))}
-      </ScrollView>
+      {/* <ScrollView contentContainerStyle={styles.scrollContent}> */}
+      {/* {dataInfo.map((value, index) => ( */}
+      <Text style={styles.item}>
+        {dataInfo.location.latitude},{dataInfo.location.longitude},{" "}
+        {dataInfo.hour}
+      </Text>
+      {/* ))} */}
+      {/* </ScrollView> */}
       <StatusBar style="auto" />
     </View>
   );
