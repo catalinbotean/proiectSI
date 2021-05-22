@@ -30,8 +30,6 @@ export function MapPage() {
     selectDaysWithWalks(state.GPS.dataGPS)
   );
 
-  console.log(informatii);
-
   React.useEffect(() => {
     dispatch(getData());
   }, []);
