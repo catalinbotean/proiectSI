@@ -41,10 +41,6 @@ export const styles = StyleSheet.create({
     marginTop: 70,
     borderTopColor: "#000000",
     borderWidth: 1,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.8,
-    shadowRadius: 1,
   },
   logo: {
     height: 40,
@@ -76,10 +72,6 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: 20,
     borderRadius: 40,
-    shadowColor: "#000",
-    shadowOffset: { width: 100, height: 100 },
-    shadowOpacity: 0.8,
-    shadowRadius: 1,
   },
   infoView: {
     display: "flex",
