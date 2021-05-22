@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from "react-native";
+import {Dimensions, StyleSheet} from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
     borderTopColor: "#000000",
     borderWidth: 1,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.8,
     shadowRadius: 1,
   },
@@ -77,7 +77,7 @@ export const styles = StyleSheet.create({
     marginLeft: 20,
     borderRadius: 40,
     shadowColor: "#000",
-    shadowOffset: { width: 100, height: 100 },
+    shadowOffset: {width: 100, height: 100},
     shadowOpacity: 0.8,
     shadowRadius: 1,
   },
