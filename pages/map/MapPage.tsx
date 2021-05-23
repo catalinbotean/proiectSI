@@ -26,10 +26,6 @@ export function MapPage() {
 
   const dispatch = useDispatch();
 
-  const informatii = useSelector((state: ApplicationState) =>
-    selectDaysWithWalks(state.GPS.dataGPS)
-  );
-
   React.useEffect(() => {
     dispatch(getData());
   }, []);

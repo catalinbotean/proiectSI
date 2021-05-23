@@ -1,7 +1,7 @@
 import {addDays, format, subDays} from "date-fns";
-import React, {LegacyRef, useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {TouchableOpacity, View, Text} from "react-native";
-import MapView, {Camera, Marker, Polyline, Region} from "react-native-maps";
+import MapView, {Marker, Polyline, Region} from "react-native-maps";
 import {useSelector} from "react-redux";
 import {ApplicationState} from "../../store";
 import {MapInput, selectWalksOfDay} from "../../store/data";
@@ -16,10 +16,24 @@ export function HistoryPage() {
   ); //array cu obiecte de tip plimbare care are startdate, endDate si coordonatele
 
   const [region, setRegion] = useState<Region>();
-  const [error, setError] = useState(false);
+  const [eroare, setEroare] = useState(false);
+
+  const colors = [
+    "#800000",
+    "#00FFFF",
+    "#000080",
+    "#800080",
+    "#008080",
+    "#F08080",
+    "#808000",
+    "#00FA9A",
+    "#FF00FF",
+    "#FF6347",
+  ];
 
   useEffect(() => {
     if (walks) {
+      setEroare(false);
       setRegion({
         latitude: walks[0].walk[0].latitude,
         longitude: walks[0].walk[0].longitude,
@@ -27,13 +41,9 @@ export function HistoryPage() {
         longitudeDelta: 0.07,
       });
     } else {
-      setError(true);
+      setEroare(true);
     }
   }, [walks]);
-
-  walks?.forEach((e) => {
-    console.log(e.startHour, " ", e.endHour, " ", e.walk.length);
-  });
 
   function goNextDay() {
     setDate(addDays(new Date(date), 1));
@@ -70,23 +80,24 @@ export function HistoryPage() {
       return undefined;
     });
   }
-  console.log(region);
+
   return (
     <View style={styles.container}>
       <View style={styles.select}>
-        <TouchableOpacity onPress={goPreviousDay}>
+        <TouchableOpacity onPress={goPreviousDay} style={styles.button}>
           <Text>Previous Day</Text>
         </TouchableOpacity>
-        <Text>{format(date, "d MMM Y")}</Text>
+        <View style={styles.dateView}>
+          <Text>{format(date, "d MMM Y")}</Text>
+        </View>
         {/* asa formatam sa arate data cum am zis ca am zis ca mai bine retin date*/}
-        <TouchableOpacity onPress={goNextDay}>
+        <TouchableOpacity onPress={goNextDay} style={styles.button}>
           <Text>Next Day</Text>
         </TouchableOpacity>
       </View>
       <MapView
         style={styles.map}
         region={region}
-        onRegionChange={setRegion}
         customMapStyle={MapStyle}
         zoomEnabled
         mapType="mutedStandard"
@@ -95,7 +106,12 @@ export function HistoryPage() {
           walks.map((walk, index) => {
             return (
               <>
-                <Polyline key={index} coordinates={walk.walk}></Polyline>
+                <Polyline
+                  strokeWidth={2}
+                  key={index}
+                  coordinates={walk.walk}
+                  strokeColor={colors[index % 10]}
+                ></Polyline>
                 <Marker
                   key={`${index}i`}
                   coordinate={walk.walk[walk.walk.length - 1]}
@@ -103,16 +119,21 @@ export function HistoryPage() {
               </>
             );
           })}
-        {/* <Marker coordinate={region} /> */}
       </MapView>
       <View style={styles.select}>
-        <TouchableOpacity onPress={zoomIn}>
-          <Text>ZoomIN</Text>
+        <TouchableOpacity style={styles.button} onPress={zoomIn}>
+          <Text>ZoomIn</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={zoomOut}>
+        <TouchableOpacity onPress={zoomOut} style={styles.button}>
           <Text>ZoomOut</Text>
         </TouchableOpacity>
       </View>
+
+      {eroare && (
+        <View style={styles.error}>
+          <Text style={styles.text}>There are no walks for this day</Text>
+        </View>
+      )}
     </View>
   );
 }
