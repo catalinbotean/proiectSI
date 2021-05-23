@@ -5,14 +5,17 @@ export interface MapInput {
   longitude: number;
 }
 
+export interface Walk {
+  walk: MapInput[];
+  startHour: Date;
+  endHour: Date;
+}
+[];
+
 export interface State {
   dates: string[];
   byDate: {
-    [id: string]: {
-      walk: MapInput[];
-      startHour: Date;
-      endHour: Date;
-    }[];
+    [id: string]: Walk[];
   };
   byId: {
     [id: string]: MapInput;

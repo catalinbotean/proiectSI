@@ -1,9 +1,9 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View, Image } from "react-native";
-import MapView, { AnimatedRegion, Marker, Polyline } from "react-native-maps";
-import { useDispatch, useSelector } from "react-redux";
-import { ApplicationState } from "../../store";
+import {StatusBar} from "expo-status-bar";
+import React, {useEffect, useState} from "react";
+import {ScrollView, Text, TouchableOpacity, View, Image} from "react-native";
+import MapView, {AnimatedRegion, Marker, Polyline} from "react-native-maps";
+import {useDispatch, useSelector} from "react-redux";
+import {ApplicationState} from "../../store";
 import {
   getData,
   refetchData,
@@ -11,7 +11,7 @@ import {
   selectLastGPSData,
 } from "../../store/data";
 
-import { styles, MapStyle } from "./MapPage.style";
+import {styles, MapStyle} from "./MapPage.style";
 
 export function MapPage() {
   const dataInfo = useSelector((state: ApplicationState) =>
@@ -25,12 +25,6 @@ export function MapPage() {
   });
 
   const dispatch = useDispatch();
-
-  const informatii = useSelector((state: ApplicationState) =>
-    selectDaysWithWalks(state.GPS.dataGPS)
-  );
-
-  console.log(informatii);
 
   React.useEffect(() => {
     dispatch(getData());
@@ -55,7 +49,6 @@ export function MapPage() {
         <MapView
           style={styles.map}
           region={region}
-          onRegionChange={setRegion}
           customMapStyle={MapStyle}
           zoomEnabled
           mapType="mutedStandard"
