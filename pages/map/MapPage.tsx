@@ -53,7 +53,6 @@ export function MapPage() {
         <MapView
           style={styles.map}
           region={region}
-          onRegionChange={setRegion}
           customMapStyle={MapStyle}
           zoomEnabled
           mapType="mutedStandard"

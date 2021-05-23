@@ -25,7 +25,7 @@ export function getDate(e: string) {
     parseInt(`${e[70]}${e[71]}`),
     parseInt(`${e[80]}${e[81]}`)
   );
-  // date = addHours(date, 3);
+  date = addHours(date, 3);
   return date;
 }
 
@@ -61,7 +61,7 @@ export function getFormattedData(dataArray: string[]) {
       parseInt(`${e[70]}${e[71]}`),
       parseInt(`${e[80]}${e[81]}`)
     );
-    // date = addHours(date, 3);
+    date = addHours(date, 3);
     if (!stateCreated.dates.includes(stringDate)) {
       stateCreated.dates.push(stringDate);
     }

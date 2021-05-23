@@ -13,4 +13,11 @@ export const styles = StyleSheet.create({
     paddingLeft: 25,
     paddingRight: 25,
   },
+  map: {
+    alignSelf: "center",
+    marginTop: 15,
+    height: 500,
+    width: "100%",
+    marginBottom: 15,
+  },
 });

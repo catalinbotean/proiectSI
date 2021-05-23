@@ -69,7 +69,7 @@ export const styles = StyleSheet.create({
     height: 60,
     width: 220,
     backgroundColor: "#342D73",
-    marginTop: 20,
+    marginTop: 75,
     marginLeft: 20,
     borderRadius: 40,
   },
